@@ -134,7 +134,7 @@ class DarazSpider(scrapy.Spider):
 
                 return True
 
-
+            # Scrape products from all pages
             scrape_page()
 
             # Save the data as a JSON file
