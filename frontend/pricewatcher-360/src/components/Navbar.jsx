@@ -14,7 +14,7 @@ const Navbar = () => {
               type="text"
               name="search-product"
               id="search-product"
-              className="block w-64 p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
+              className="block w-[600px] p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
               placeholder="Search for a product"
             />
             <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
