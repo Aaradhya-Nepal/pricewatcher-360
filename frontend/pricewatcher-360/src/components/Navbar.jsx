@@ -4,8 +4,10 @@ import { FiSearch } from "react-icons/fi";
 const Navbar = () => {
   return (
     <>
-      <nav className="flex flex-row p-5 justify-between items-center">
-        <div className="text-2xl">PriceWatcher-360</div>
+      <nav className="flex flex-row py-4 px-10 justify-between items-center shadow-md">
+        <div className="text-2xl font-montserrat font-semibold">
+          PriceWatcher-360
+        </div>
         <div className="flex items-center">
           <div className="relative">
             <input

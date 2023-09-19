@@ -7,6 +7,9 @@ export default {
         "primary-color": "var(--primary-color)",
         "secondary-color": "var(--secondary-color)",
       },
+      fontFamily: {
+        montserrat: ["Montserrat", "sans"],
+      },
     },
   },
   plugins: [],
