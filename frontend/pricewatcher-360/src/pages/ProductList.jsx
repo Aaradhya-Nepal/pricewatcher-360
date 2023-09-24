@@ -20,7 +20,7 @@ const ProductList = () => {
                     name="search-product"
                     id="search-product"
                     className="block w-80 p-2 pl-10 text-sm text-gray-400 border border-gray-300 rounded-lg placeholder-gray-400"
-                    placeholder="Search for a product"
+                    placeholder="Search for a product from the list"
                   />
                   <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                     <FiSearch className="w-4 h-4 text-gray-400" />
