@@ -6,18 +6,11 @@ __pycache__/
 *.pyc
 *.pyo
 
-# Ignore Visual Studio Code settings
-.vscode/
-.vscode/settings.json
+.vscode/*
 
 # Ignore Django database file (if it's generated)
+db.sqlite3
+
+.vscode/
 backend/scraper_project/db.sqlite3
-
-# Ignore any other generated or user-specific files/directories
-# Add them here as needed
-
-# Ignore compiled Python files in your project
-backend/scraper_project/scraper/scraper/__pycache__/
-backend/scraper_project/scraper/scraper/spiders/__pycache__/
-backend/scraper_project/scraper_app/__pycache__/
-backend/scraper_project/scraper_app/management/commands/__pycache__/
+**/__pycache__/*
