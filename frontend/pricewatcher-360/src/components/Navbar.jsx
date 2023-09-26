@@ -3,20 +3,31 @@ import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
 import axios from "axios";
 
-const Navbar = ({ onSearch }) => {
+const Navbar = () => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSearch = async () => {
     try {
       const response = await axios.post("http://127.0.0.1:8000/api/search/", {
-        search_term: inputValue,
+        search_term: inputValue, // Assuming inputValue contains your search term
       });
-      const responseData = response.data;
-      // Handle the response data as needed (e.g., display search results)
+
+      // Check if the response status indicates success (e.g., 200 OK)
+      if (response.status === 200) {
+        // Handle the response data as needed
+        const responseData = response.data.search_term;
+        console.log(responseData);
+        return responseData;
+      } else {
+        // Handle other response status codes (e.g., 4xx or 5xx errors)
+        console.error("Request failed with status:", response.status);
+        return null; // or throw an error
+      }
     } catch (error) {
+      // Handle network errors or other issues
       console.error("Error searching:", error);
+      throw error; // You can re-throw the error or handle it differently
     }
-    onSearch(inputValue);
   };
 
   return (

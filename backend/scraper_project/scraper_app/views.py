@@ -34,14 +34,18 @@ def serialize_data(data):
 @csrf_exempt
 def search_view(request):
     if request.method == 'POST':
+
+        data = json.loads(request.body.decode('utf-8'))
         # Check if 'search_term' exists in the POST data
-        if 'search_term' in request.POST:
+        search_term = data.get('search_term', '')
+
+        if search_term:
             # Retrieve the search term from the POST data
-            search_term = request.POST['search_term']
+            search_term = data['search_term']
 
             # Trigger the Scrapy spider with the search term as a command-line argument
-            spider_name = 'daraz'  # Replace with your actual spider name
-            max_pages = 2  # Replace with your desired max pages
+            spider_name = 'daraz'
+            max_pages = 2 
 
             spider_directory = 'C:\\Users\\Aaradhya\\Documents\\Projects\\pricewatcher-360\\backend\\scraper_project\\scraper\\scraper\\spiders'
 

@@ -20,6 +20,6 @@ from scraper_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('api/get_data/', views.get_data, name='get_data'),
-      path('api/search/', views.search_view, name='search_view'),
+    path('api/get_data/', views.get_data, name='get_data'),
+    path('api/search/', views.search_view, name='search_view'),
 ]
