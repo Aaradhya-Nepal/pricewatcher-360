@@ -3,14 +3,9 @@ myenv/
 
 # Ignore Python bytecode files
 __pycache__/
-*.pyc
-*.pyo
 
-.vscode/*
+# Ignore Visual Studio Code settings
+.vscode/
 
 # Ignore Django database file (if it's generated)
-db.sqlite3
-
-.vscode/
 backend/scraper_project/db.sqlite3
-**/__pycache__/*
