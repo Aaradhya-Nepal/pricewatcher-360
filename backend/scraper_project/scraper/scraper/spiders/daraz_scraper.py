@@ -130,21 +130,29 @@ class DarazSpider(scrapy.Spider):
                             # Handle the case when no data is found
                             discount = "N/A"
 
-                        anchor_element = product_element.find_element(
-                            By.CSS_SELECTOR, "a"
-                        )
-                        link = anchor_element.get_attribute("href")
+                        try:
+                            anchor_element = product_element.find_element(
+                                By.CSS_SELECTOR, "a"
+                            )
+                            link = anchor_element.get_attribute("href")
 
-                        image_element = anchor_element.find_element(
-                            By.CSS_SELECTOR, ".image--WOyuZ"
-                        )
-                        image = image_element.get_attribute("src")
-                        alt_text = image_element.get_attribute("alt")
+                            image_element = anchor_element.find_element(
+                                By.CSS_SELECTOR, ".image--WOyuZ"
+                            )
+                            image = image_element.get_attribute("src")
+                            alt_text = image_element.get_attribute("alt")
 
-                        location_element = product_element.find_element(
-                            By.CSS_SELECTOR, ".location--eh0Ro"
-                        )
-                        location = location_element.text
+                            location_element = product_element.find_element(
+                                By.CSS_SELECTOR, ".location--eh0Ro"
+                            )
+                            location = location_element.text
+                        except NoSuchElementException:
+                            # If any of these elements are not found, set their respective variables to None or empty strings
+                            link = ""
+                            image = ""
+                            alt_text = ""
+                            location = ""
+
 
                         try:
                             rating_element = product_element.find_element(
