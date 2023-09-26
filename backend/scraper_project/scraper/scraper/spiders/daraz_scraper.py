@@ -10,6 +10,7 @@ import argparse
 from django.conf import settings
 import os
 import sys
+from selenium.common.exceptions import NoSuchElementException
 
 # Assuming 'scraper_project' is the name of your Django project directory.
 django_project_path = 'C:\\Users\\Aaradhya\\Documents\\Projects\\pricewatcher-360\\backend\\scraper_project'
@@ -152,11 +153,11 @@ class DarazSpider(scrapy.Spider):
                             number_of_reviews_element = rating_element.find_element(
                                 By.CSS_SELECTOR, ".rating__review--ygkUy"
                             )
-                            number_of_reviews = number_of_reviews_element.text.replace(
-                                "(", ""
-                            ).replace(")", "")
-                        except:
-                            number_of_reviews = "NA"
+                            number_of_reviews = int(number_of_reviews_element.text.strip("()"))
+                        except NoSuchElementException:
+                            # If the rating element or number of reviews element is not found, set the value to 0
+                            number_of_reviews = 0
+
 
                         # Create ScrapedProduct objects for each product in product_data list
                         await create_scraped_product_async(
