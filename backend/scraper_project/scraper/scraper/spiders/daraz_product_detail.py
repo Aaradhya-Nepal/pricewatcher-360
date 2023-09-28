@@ -15,7 +15,7 @@ sys.path.append(django_project_path)
 os.environ['DJANGO_SETTINGS_MODULE'] = 'scraper_project.settings'
 import django
 django.setup()
-from scraper_app.models import Product
+from scraper_app.models import ProductDetail, ScrapedProduct
 
 class DarazSpider(scrapy.Spider):
     name = 'detail_spider'
@@ -34,8 +34,9 @@ class DarazSpider(scrapy.Spider):
             yield scrapy.Request(url=url, callback=self.parse)
 
     @sync_to_async
-    def save_to_database(self, product_data):
-        product = Product(
+    def save_to_database(self, product_data, scraped_link):
+        scraped_product = ScrapedProduct.objects.get(link=scraped_link)
+        product = ProductDetail(
             title=product_data['title'],
             brand=product_data['brand'],
             price=product_data['price'],
@@ -48,6 +49,7 @@ class DarazSpider(scrapy.Spider):
             brand_spec=product_data['brand_spec'],
             sku_spec=product_data['sku_spec'],
             image_links=product_data['image_links'],
+            scraped_product_link=scraped_product,
         )
         product.save()
 
@@ -101,7 +103,7 @@ class DarazSpider(scrapy.Spider):
             'image_links': image_links,
         }
 
-        await self.save_to_database(product_data)
+        await self.save_to_database(product_data, response.url)
 
 if __name__ == '__main__':
     # Pass the URL as a command-line argument
