@@ -9,6 +9,11 @@ from django.shortcuts import get_object_or_404
 from django.core.serializers import serialize
 from django.forms.models import model_to_dict
 
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from .serializers import TrackerUserSerializer
+
 def get_data(request):
     data = ScrapedProduct.objects.all()
     serialized_data = serialize_data(data)
@@ -121,3 +126,13 @@ def scrape_product_data(request, product_id):
     except Exception as e:
         # Handle other exceptions
         return JsonResponse({'error': str(e)}, status=500)
+    
+
+@api_view(['POST'])
+def signup_view(request):
+    if request.method == 'POST':
+        serializer = TrackerUserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -1,5 +1,6 @@
 # scraper/models.py
 from django.db import models
+from django.contrib.auth.hashers import make_password
 
 class ScrapedProduct(models.Model):
     title = models.CharField(max_length=200)
@@ -35,3 +36,15 @@ class ProductDetail(models.Model):
     def __str__(self):
         return self.title
 
+class TrackerUser(models.Model):
+    username = models.CharField(max_length=30, unique=True)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=255)
+
+    def save(self, *args, **kwargs):
+        # Hash the password before saving
+        self.password = make_password(self.password)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.username
