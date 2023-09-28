@@ -1,6 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const Card = ({ imageUrl, title, currentPrice, originalPrice, discount }) => {
+const Card = ({
+  imageUrl,
+  title,
+  currentPrice,
+  originalPrice,
+  discount,
+  productId,
+}) => {
   return (
     <div className="max-w-xs bg-white border border-gray-300 rounded-lg">
       <div className="p-2">
@@ -44,11 +52,11 @@ const Card = ({ imageUrl, title, currentPrice, originalPrice, discount }) => {
             <p className="text-xs text-gray-600">{discount}</p>
           </div>
         </div>
-        <a href="#">
+        <Link to={`/products/${productId}`}>
           <button className="w-full bg-white hover:bg-primary-color hover:text-white text-black border border-gray-300 hover:border-primary-color px-3 py-2 rounded-md transition-all duration-200">
             View
           </button>
-        </a>
+        </Link>
       </div>
     </div>
   );

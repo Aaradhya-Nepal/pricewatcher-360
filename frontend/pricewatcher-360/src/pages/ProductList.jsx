@@ -14,6 +14,7 @@ const ProductList = () => {
         `http://127.0.0.1:8000/api/get_data/?search=${searchTerm}`
       );
       const responseData = response.data.data;
+      console.log(responseData);
       setProducts(responseData);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -63,6 +64,7 @@ const ProductList = () => {
               currentPrice={product.current_price}
               originalPrice={product.original_price}
               discount={product.discount}
+              productId={product.pk}
             />
           ))}
         </div>

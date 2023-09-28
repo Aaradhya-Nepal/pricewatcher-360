@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/get_data/', views.get_data, name='get_data'),
     path('api/search/', views.search_view, name='search_view'),
+     path('api/scrape_data/<int:product_id>/', views.scrape_product_data, name='scrape_product_data'),
 ]

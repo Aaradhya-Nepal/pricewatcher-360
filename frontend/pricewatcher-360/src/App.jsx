@@ -1,13 +1,24 @@
 import "./App.css";
 import Navbar from "./components/Navbar";
 import ProductList from "./pages/ProductList";
-import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  BrowserRouter,
+} from "react-router-dom";
+import ProductDetail from "./pages/ProductDetail";
 
 function App() {
   return (
     <div>
       <Navbar />
-      <ProductList />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<ProductList />} />
+          <Route path="/products/:productId" element={<ProductDetail />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
