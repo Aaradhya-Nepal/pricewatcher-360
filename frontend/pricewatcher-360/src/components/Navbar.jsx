@@ -33,9 +33,11 @@ const Navbar = () => {
   return (
     <>
       <nav className="flex flex-row py-4 px-10 justify-between items-center shadow-md">
-        <div className="text-2xl font-montserrat font-semibold">
-          PriceWatcher-360
-        </div>
+        <a href="/">
+          <div className="text-2xl font-montserrat font-semibold">
+            PriceWatcher-360
+          </div>
+        </a>
         <div className="relative">
           <input
             type="text"
