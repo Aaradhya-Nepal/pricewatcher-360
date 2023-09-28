@@ -5,6 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 import subprocess
 import json
 import requests
+from django.shortcuts import get_object_or_404
 
 def get_data(request):
     data = ScrapedProduct.objects.all()
@@ -79,33 +80,31 @@ def search_view(request):
     else:
         # Handle other HTTP methods or return an error response
         return JsonResponse({'error': 'Invalid request method'})
-    
+
 def scrape_product_data(request, product_id):
     try:
-        print(f"Received product ID: {product_id}")
         # Retrieve the ScrapedProduct instance based on the product ID
-        product = ScrapedProduct.objects.get(pk=product_id)
+        product = get_object_or_404(ScrapedProduct, pk=product_id)
 
         # Retrieve the product URL from the instance
         product_url = product.link
 
-        # Build the Scrapy command
-        scrapy_command = [
-            'scrapy', 'crawl', 'your_spider_name', '-a', f'start_url={product_url}'
-        ]
+        # Run the Scrapy spider using subprocess
+        spider_directory = 'C:\\Users\\Aaradhya\\Documents\\Projects\\pricewatcher-360\\backend\\scraper_project\\scraper\\scraper\\spiders'
+        subprocess.run([
+            'scrapy',
+            'crawl',
+            'detail_spider',
+            '-a',
+            f'start_urls={product_url}'
+        ], cwd=spider_directory, check=True)
 
-        # Run the Scrapy command using subprocess
-        subprocess.run(scrapy_command, check=True)
-
-        # Now, you can proceed with other actions after the spider has run.
-        # ...
-
-        # For demonstration, let's return the product URL in the response
         response_data = {
             'status': 'success',
             'product_url': product_url,
         }
         return JsonResponse(response_data)
+
     except ScrapedProduct.DoesNotExist:
         # Handle the case where the product ID is not found
         return JsonResponse({'error': 'Product not found'}, status=404)

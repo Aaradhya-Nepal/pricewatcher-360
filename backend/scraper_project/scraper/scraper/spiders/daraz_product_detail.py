@@ -9,7 +9,6 @@ from scrapy.crawler import CrawlerProcess
 from scrapy.utils.project import get_project_settings
 from asgiref.sync import sync_to_async
 
-
 # Assuming 'scraper_project' is the name of your Django project directory.
 django_project_path = 'C:\\Users\\Aaradhya\\Documents\\Projects\\pricewatcher-360\\backend\\scraper_project'
 sys.path.append(django_project_path)
@@ -103,25 +102,6 @@ class DarazSpider(scrapy.Spider):
         }
 
         await self.save_to_database(product_data)
-
-        # Save the data as a JSON file
-        output_file = 'output.json'
-        with open(output_file, 'w', encoding='utf-8') as json_file:
-            data = {
-                'title': title,
-                'brand': brand,
-                'price': price,
-                'delivery_info': delivery_info,
-                'sold_by': sold_by,
-                'positive_seller_ratings': positive_seller_ratings,
-                'ship_on_time': ship_on_time,
-                'chat_response_rate': chat_response_rate,
-                'highlights': highlights,
-                'brand_spec': brand_spec,
-                'sku_spec': sku_spec,
-                'image_links': image_links,
-            }
-            json.dump(data, json_file, ensure_ascii=False, indent=4)
 
 if __name__ == '__main__':
     # Pass the URL as a command-line argument
