@@ -1,11 +1,13 @@
 import subprocess
 from django.http import JsonResponse
-from scraper_app.models import ScrapedProduct
+from scraper_app.models import ProductDetail, ScrapedProduct
 from django.views.decorators.csrf import csrf_exempt
 import subprocess
 import json
 import requests
 from django.shortcuts import get_object_or_404
+from django.core.serializers import serialize
+from django.forms.models import model_to_dict
 
 def get_data(request):
     data = ScrapedProduct.objects.all()
@@ -84,30 +86,38 @@ def search_view(request):
 def scrape_product_data(request, product_id):
     try:
         # Retrieve the ScrapedProduct instance based on the product ID
-        product = get_object_or_404(ScrapedProduct, pk=product_id)
+        scraped_product = get_object_or_404(ScrapedProduct, pk=product_id)
 
         # Retrieve the product URL from the instance
-        product_url = product.link
+        product_url = scraped_product.link
 
-        # Run the Scrapy spider using subprocess
-        spider_directory = 'C:\\Users\\Aaradhya\\Documents\\Projects\\pricewatcher-360\\backend\\scraper_project\\scraper\\scraper\\spiders'
-        subprocess.run([
-            'scrapy',
-            'crawl',
-            'detail_spider',
-            '-a',
-            f'start_urls={product_url}'
-        ], cwd=spider_directory, check=True)
+        # Check if data already exists in ProductDetail for the given link
+        if not ProductDetail.objects.filter(scraped_product_link=scraped_product).exists():
+            # Run the Scrapy spider using subprocess
+            spider_directory = 'C:\\Users\\Aaradhya\\Documents\\Projects\\pricewatcher-360\\backend\\scraper_project\\scraper\\scraper\\spiders'
+            subprocess.run([
+                'scrapy',
+                'crawl',
+                'detail_spider',
+                '-a',
+                f'start_urls={product_url}'
+            ], cwd=spider_directory, check=True)
 
-        response_data = {
-            'status': 'success',
-            'product_url': product_url,
-        }
-        return JsonResponse(response_data)
+        # Fetch the data from ProductDetail
+        product_detail_instance = ProductDetail.objects.get(scraped_product_link=scraped_product)
+
+        # Convert the model instance to a dictionary
+        product_detail_data = model_to_dict(product_detail_instance)
+
+        # Return the serialized data as JSON
+        return JsonResponse({'status': 'success', 'data': product_detail_data})
 
     except ScrapedProduct.DoesNotExist:
         # Handle the case where the product ID is not found
         return JsonResponse({'error': 'Product not found'}, status=404)
+    except ProductDetail.DoesNotExist:
+        # Handle the case where the product detail data is not found
+        return JsonResponse({'error': 'Product detail not found'}, status=404)
     except Exception as e:
         # Handle other exceptions
         return JsonResponse({'error': str(e)}, status=500)
