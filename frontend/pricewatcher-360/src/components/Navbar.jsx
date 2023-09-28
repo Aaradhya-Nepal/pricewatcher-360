@@ -2,6 +2,7 @@ import React from "react";
 import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
 import axios from "axios";
+import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   const [inputValue, setInputValue] = useState("");
@@ -60,20 +61,20 @@ const Navbar = () => {
         </div>
         <div className="flex flex-row gap-3">
           <div className="login-button">
-            <button
-              type="button"
+            <NavLink
+              to="/login"
               className="bg-white text-black font-medium text-base border px-6 py-3 transition-all hover:bg-primary-color hover:text-white"
             >
               Log In
-            </button>
+            </NavLink>
           </div>
           <div className="signup-button">
-            <button
-              type="button"
+            <NavLink
+              to="/signup"
               className="bg-primary-color text-white font-medium text-base border px-6 py-3 transition-all hover:bg-secondary-color"
             >
               Sign Up
-            </button>
+            </NavLink>
           </div>
         </div>
       </nav>
