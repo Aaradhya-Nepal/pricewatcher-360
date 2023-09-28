@@ -14,3 +14,20 @@ class ScrapedProduct(models.Model):
 
     def __str__(self):
         return self.title
+    
+class Product(models.Model):
+    title = models.CharField(max_length=255, null=True, blank=True)
+    brand = models.CharField(max_length=100, null=True, blank=True)
+    price = models.CharField(max_length=20, null=True, blank=True)
+    delivery_info = models.CharField(max_length=255, null=True, blank=True)
+    sold_by = models.CharField(max_length=255, null=True, blank=True)
+    positive_seller_ratings = models.CharField(max_length=20, null=True, blank=True)
+    ship_on_time = models.CharField(max_length=20, null=True, blank=True)
+    chat_response_rate = models.CharField(max_length=20, null=True, blank=True)
+    highlights = models.TextField(null=True, blank=True)
+    brand_spec = models.CharField(max_length=100, null=True, blank=True)
+    sku_spec = models.CharField(max_length=50, null=True, blank=True)
+    image_links = models.JSONField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
